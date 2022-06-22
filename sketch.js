@@ -34,21 +34,16 @@ function setup() {
   button.mousePressed(saveMe);
     createP();
 
-  // ringDiv = createDiv('Rings: ' + rings);
-  // slider = createSlider(1, maxRings, rings);
-  // slider.style("width", "80px");
-
-  createP('Choose number of segments:')
-  segDiv = createDiv('Segments');
+  createP('Number of themes:')
+  segDiv = createDiv('Themes');
   slider2 = createSlider(1, maxSegments, segments);
-  // slider2.changed(doDraw);
 
     checkbox = createCheckbox('Segmented outer ring?', false);
 
-  createP('Choose number of sub-segments for each segment (NOTE: Segments number anti-clockwise, right to left)');
+  createP('Choose number of imperatives for each theme (NOTE: Themes number anti-clockwise, right to left)');
 
   for (let i = 0; i < maxSegments; i++) {
-    sliderPs.push(createP('Segment ' + (i+1) + ' sub-segments'));
+    sliderPs.push(createP('Theme ' + (i+1) + ' imperatives'));
     sliders.push(createSlider(1, maxSubSegments, subSegments));
     sliderPs[i].hide();    
     sliders[i].hide();
@@ -76,7 +71,7 @@ function draw() {
     sliders[i].hide();
   }
   for (let i = 0; i < slider2.value(); i++) {
-    sliderPs[i].html('Segment ' + (i+1) + ' sub-segments: ' + sliders[i].value());
+    sliderPs[i].html('Theme ' + (i+1) + ', imperatives: ' + sliders[i].value());
     sliderPs[i].show();    
     sliders[i].show();
 
