@@ -38,7 +38,7 @@ function setup() {
   segDiv = createDiv('Themes');
   slider2 = createSlider(1, maxSegments, segments);
 
-    checkbox = createCheckbox('Segmented outer ring?', false);
+    checkbox = createCheckbox('Segmented outer ring?', true);
 
   createP('Choose number of imperatives for each theme (NOTE: Themes number anti-clockwise, right to left)');
 
@@ -55,12 +55,12 @@ function setup() {
 function draw() {
 
   if (checkbox.checked()) {
-    a = (rings-1)/rings * width / 2;
-    b = (rings-1)/rings * height;
-  }
-  else {
     a = width / 2;
     b = height;
+  }
+  else {
+    a = (rings-1)/rings * width / 2;
+    b = (rings-1)/rings * height;
   }
 
   // ringDiv.html('Rings: ' + slider.value());
