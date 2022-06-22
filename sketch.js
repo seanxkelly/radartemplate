@@ -3,6 +3,8 @@ let height = 600;
 
 let a = width / 2;
 let b = height;
+let ma = width / 2;
+let mb = height;
 
 let rings = 5;
 let maxRings = 10;
@@ -40,8 +42,8 @@ function setup() {
   segDiv = createDiv('Segments');
   slider2 = createSlider(1, maxSegments, segments);
   // slider2.changed(doDraw);
-  
-  checkbox = createCheckbox('Segmented outer ring?', false);
+
+    checkbox = createCheckbox('Segmented outer ring?', false);
 
   createP('Choose number of sub-segments for each segment (NOTE: Segments number anti-clockwise, right to left)');
 
@@ -56,6 +58,15 @@ function setup() {
 }
 
 function draw() {
+
+  if (checkbox.checked()) {
+    a = (rings-1)/rings * width / 2;
+    b = (rings-1)/rings * height;
+  }
+  else {
+    a = width / 2;
+    b = height;
+  }
 
   // ringDiv.html('Rings: ' + slider.value());
   segDiv.html('Segments: ' + slider2.value());
@@ -138,8 +149,8 @@ function draw() {
     line(
       0,
       0,
-      a * cos(-radians(deg * (i + 1))),
-      b * sin(-radians(deg * (i + 1)))
+      ma * cos(-radians(deg * (i + 1))),
+      mb * sin(-radians(deg * (i + 1)))
     );
   }
   strokeWeight(1);
