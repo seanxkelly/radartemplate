@@ -40,6 +40,8 @@ function setup() {
   segDiv = createDiv('Segments');
   slider2 = createSlider(1, maxSegments, segments);
   // slider2.changed(doDraw);
+  
+  checkbox = createCheckbox('Segmented outer ring?', false);
 
   createP('Choose number of sub-segments for each segment (NOTE: Segments number anti-clockwise, right to left)');
 
