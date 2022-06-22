@@ -64,7 +64,7 @@ function draw() {
   }
 
   // ringDiv.html('Rings: ' + slider.value());
-  segDiv.html('Segments: ' + slider2.value());
+  segDiv.html('Themes: ' + slider2.value());
 
   for (let i = 0; i < maxSegments; i++) {
     sliderPs[i].hide();    
