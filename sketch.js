@@ -1,5 +1,7 @@
-let width = 1500;
-let height = 600;
+let width = 1000;
+let eheight = width*0.45;
+let cheight = width*0.5;
+let height = eheight;
 
 let a = width / 2;
 let b = height;
@@ -15,14 +17,17 @@ let maxSubSegments = 6;
 let deg;
 // let ang;
 let c;
+let subSegLineColour;
 
 let sliderPs = [];
 let sliders = [];
 
 let colours = ['#193874', 'white', '#55B9E6', '#F5C342'];
+let ringColours = ['#A6A6A6', '#D9D9D9', '#193874', 'white', '#55B9E6', '#F5C342', '#193874'];
 let cc = 0;
 
 function setup() {
+  pixelDensity(2); // Witchcraft!!...to make it create same size image on different density/quality monitors!
   
   frameRate(5);
 
@@ -30,15 +35,25 @@ function setup() {
 
   createP();
   
-  button = createButton('Download Radar Template');
+  button = createButton('Download Radar Template Image');
   button.mousePressed(saveMe);
-    createP();
+
+  createP('Radar style:');
+  radio = createRadio();
+  radio.option('Elliptical');
+  radio.option('Semicircle');
+  radio.selected('Elliptical');
+  radio.input(changeShape);
 
   createP('Number of themes:')
   segDiv = createDiv('Themes');
   slider2 = createSlider(1, maxSegments, segments);
 
-    checkbox = createCheckbox('Segmented outer ring?', true);
+  checkbox = createCheckbox('Segmented outer rings?', true);
+  checkbox2 = createCheckbox('Cisco product & services outer rings?', false);
+
+    createP('Imperative line separator colour:');
+    subSegLineColour = createColorPicker('green');
 
   createP('Choose number of imperatives for each theme (NOTE: Themes number anti-clockwise, right to left)');
 
@@ -47,20 +62,40 @@ function setup() {
     sliders.push(createSlider(1, maxSubSegments, subSegments));
     sliderPs[i].hide();    
     sliders[i].hide();
-    // sliders[i].changed(doDraw);
   }
 
 }
 
+
+
 function draw() {
 
+  // Two extra rings for Cisco stuff?
+  if (checkbox2.checked()) {
+    rings = 7;
+  }
+  else {
+    rings = 5;
+  }
+
+  // How far do we draw the sub-segment lines?
   if (checkbox.checked()) {
+    // Draw them all the way to the edge
     a = width / 2;
     b = height;
   }
   else {
-    a = (rings-1)/rings * width / 2;
-    b = (rings-1)/rings * height;
+    // Stop at Measures of Success
+    if (checkbox2.checked()) {
+      // There are 7 rings
+      a = (rings-3)/rings * width / 2;
+      b = (rings-3)/rings * height;
+    }
+    else {
+      // There are 5 rings
+      a = (rings-1)/rings * width / 2;
+      b = (rings-1)/rings * height;
+    }
   }
 
   // ringDiv.html('Rings: ' + slider.value());
@@ -84,10 +119,16 @@ function draw() {
   segments = slider2.value();
   deg = 180 / segments;
   
-
-  fill(colours[cc%colours.length]);
+  // Draw rings EXCEPT final inner ring
+  if (checkbox2.checked()) {
+    cc = 0;
+  }
+  else {
+    cc = 2;
+  }
   stroke('white');
   for (let i = 0; i < rings - 2; i++) {
+    fill(ringColours[cc]);
     arc(
       0,
       0,
@@ -98,13 +139,11 @@ function draw() {
       CHORD
     );
     cc++;
-      fill(colours[cc%colours.length]);
-
   }
 
+  // Draw sub-segment lines
   noFill();
-  stroke('green');
-
+  stroke(subSegLineColour.color());
   for (let i = 0; i < slider2.value(); i++) {
     for (let j = 0; j < sliders[i].value(); j++) {
 
@@ -124,9 +163,9 @@ function draw() {
 
   }
 
-  
-    fill(colours[cc%colours.length]);
-
+  // Draw themes ring
+  fill(ringColours[cc]);
+  cc++;
   arc(
     0,
     0,
@@ -137,6 +176,7 @@ function draw() {
     CHORD
   );
   
+  // Draw main segment (theme) lines
   noFill();
   stroke('black');
   strokeWeight(2);
@@ -150,8 +190,9 @@ function draw() {
   }
   strokeWeight(1);
   
+  // Draw centre ring
   stroke(255);
-fill('#193874');
+  fill(ringColours[cc]);
   arc(
     0,
     0,
@@ -162,12 +203,26 @@ fill('#193874');
     CHORD
   );
   noFill();
-  cc++; // Complete bodge to stop flashing on frame refresh!!!
+  // cc++; // Complete bodge to stop flashing on frame refresh!!!
     
   
 }
 
 function saveMe() {
-    saveCanvas();
+    saveCanvas(c, 'radartemplate');
 
+
+}
+
+function changeShape() {
+  if (radio.value() == 'Elliptical') {
+    height = eheight;
+    mb = height;
+  }
+  else {
+    height = cheight;
+    mb = height;
+  }
+  resizeCanvas(width, height);
+  draw();
 }
