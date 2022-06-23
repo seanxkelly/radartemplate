@@ -70,6 +70,9 @@ function setup() {
 
 function draw() {
 
+
+
+
   // Two extra rings for Cisco stuff?
   if (checkbox2.checked()) {
     rings = 7;
@@ -141,6 +144,8 @@ function draw() {
     cc++;
   }
 
+
+
   // Draw sub-segment lines
   noFill();
   stroke(subSegLineColour.color());
@@ -163,6 +168,8 @@ function draw() {
 
   }
 
+
+
   // Draw themes ring
   stroke('white');
   fill(ringColours[cc]);
@@ -176,6 +183,8 @@ function draw() {
     TWO_PI,
     CHORD
   );
+
+
   
   // Draw main segment (theme) lines
   noFill();
@@ -190,6 +199,8 @@ function draw() {
     );
   }
   strokeWeight(1);
+
+
   
   // Draw centre ring
   stroke(255);
@@ -206,6 +217,11 @@ function draw() {
   noFill();
   // cc++; // Complete bodge to stop flashing on frame refresh!!!
     
+  strokeWeight(3);
+  stroke('black');
+  line(-width/2,0,width/2,0); // Remember the translate above!!
+  strokeWeight(1);
+  
   
 }
 
