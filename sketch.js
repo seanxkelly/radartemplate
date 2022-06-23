@@ -164,6 +164,7 @@ function draw() {
   }
 
   // Draw themes ring
+  stroke('white');
   fill(ringColours[cc]);
   cc++;
   arc(
