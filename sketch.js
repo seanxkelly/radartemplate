@@ -1,6 +1,6 @@
 let width = 1000;
-let eheight = width*0.45;
-let cheight = width*0.5;
+let eheight = width * 0.45;
+let cheight = width * 0.5;
 let height = eheight;
 
 let a = width / 2;
@@ -28,13 +28,13 @@ let cc = 0;
 
 function setup() {
   pixelDensity(2); // Witchcraft!!...to make it create same size image on different density/quality monitors!
-  
+
   frameRate(5);
 
   c = createCanvas(width, height);
 
   createP();
-  
+
   button = createButton('Download Radar Template Image');
   button.mousePressed(saveMe);
 
@@ -52,15 +52,15 @@ function setup() {
   checkbox = createCheckbox('Segmented outer rings?', true);
   checkbox2 = createCheckbox('Cisco product & services outer rings?', false);
 
-    createP('Imperative line separator colour:');
-    subSegLineColour = createColorPicker('green');
+  createP('Imperative line separator colour:');
+  subSegLineColour = createColorPicker('green');
 
   createP('Choose number of imperatives for each theme (NOTE: Themes number anti-clockwise, right to left)');
 
   for (let i = 0; i < maxSegments; i++) {
-    sliderPs.push(createP('Theme ' + (i+1) + ' imperatives'));
+    sliderPs.push(createP('Theme ' + (i + 1) + ' imperatives'));
     sliders.push(createSlider(1, maxSubSegments, subSegments));
-    sliderPs[i].hide();    
+    sliderPs[i].hide();
     sliders[i].hide();
   }
 
@@ -76,8 +76,7 @@ function draw() {
   // Two extra rings for Cisco stuff?
   if (checkbox2.checked()) {
     rings = 7;
-  }
-  else {
+  } else {
     rings = 5;
   }
 
@@ -86,18 +85,16 @@ function draw() {
     // Draw them all the way to the edge
     a = width / 2;
     b = height;
-  }
-  else {
+  } else {
     // Stop at Measures of Success
     if (checkbox2.checked()) {
       // There are 7 rings
-      a = (rings-3)/rings * width / 2;
-      b = (rings-3)/rings * height;
-    }
-    else {
+      a = (rings - 3) / rings * width / 2;
+      b = (rings - 3) / rings * height;
+    } else {
       // There are 5 rings
-      a = (rings-1)/rings * width / 2;
-      b = (rings-1)/rings * height;
+      a = (rings - 1) / rings * width / 2;
+      b = (rings - 1) / rings * height;
     }
   }
 
@@ -105,12 +102,12 @@ function draw() {
   segDiv.html('Themes: ' + slider2.value());
 
   for (let i = 0; i < maxSegments; i++) {
-    sliderPs[i].hide();    
+    sliderPs[i].hide();
     sliders[i].hide();
   }
   for (let i = 0; i < slider2.value(); i++) {
-    sliderPs[i].html('Theme ' + (i+1) + ', imperatives: ' + sliders[i].value());
-    sliderPs[i].show();    
+    sliderPs[i].html('Theme ' + (i + 1) + ', imperatives: ' + sliders[i].value());
+    sliderPs[i].show();
     sliders[i].show();
 
   }
@@ -121,12 +118,11 @@ function draw() {
   // rings = slider.value();
   segments = slider2.value();
   deg = 180 / segments;
-  
+
   // Draw rings EXCEPT final inner ring
   if (checkbox2.checked()) {
     cc = 0;
-  }
-  else {
+  } else {
     cc = 2;
   }
   stroke('white');
@@ -152,14 +148,14 @@ function draw() {
   for (let i = 0; i < slider2.value(); i++) {
     for (let j = 0; j < sliders[i].value(); j++) {
 
-      let angleT = 180 / slider2.value()/sliders[i].value() * (j + 1) + i*180/slider2.value();
+      let angleT = 180 / slider2.value() / sliders[i].value() * (j + 1) + i * 180 / slider2.value();
       // console.log('seg' + i + ', subseg ' + j + ', angle ' + angleT);
       line(
-      0,
-      0,
-      a * cos(-radians(angleT)),
-      b * sin(-radians(angleT))
-    );
+        0,
+        0,
+        a * cos(-radians(angleT)),
+        b * sin(-radians(angleT))
+      );
 
       // a * cos(-radians(180 / slider2.value()/sliders[i].value() * (j + 1))),
       // b * sin(-radians(180 / slider2.value()/sliders[i].value() * (j + 1)))
@@ -185,7 +181,7 @@ function draw() {
   );
 
 
-  
+
   // Draw main segment (theme) lines
   noFill();
   stroke('black');
@@ -201,7 +197,7 @@ function draw() {
   strokeWeight(1);
 
 
-  
+
   // Draw centre ring
   stroke(255);
   fill(ringColours[cc]);
@@ -216,17 +212,17 @@ function draw() {
   );
   noFill();
   // cc++; // Complete bodge to stop flashing on frame refresh!!!
-    
+
   strokeWeight(3);
   stroke('black');
-  line(-width/2,0,width/2,0); // Remember the translate above!!
+  line(-width / 2, 0, width / 2, 0); // Remember the translate above!!
   strokeWeight(1);
-  
-  
+
+
 }
 
 function saveMe() {
-    saveCanvas(c, 'radartemplate');
+  saveCanvas(c, 'radartemplate');
 
 
 }
@@ -235,8 +231,7 @@ function changeShape() {
   if (radio.value() == 'Elliptical') {
     height = eheight;
     mb = height;
-  }
-  else {
+  } else {
     height = cheight;
     mb = height;
   }
