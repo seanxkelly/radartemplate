@@ -238,3 +238,4 @@ function changeShape() {
   resizeCanvas(width, height);
   draw();
 }
+
